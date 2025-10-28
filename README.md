@@ -1,2 +1,38 @@
 # FINAL-Lab-Exercise-2-
-Exploring XMLHttpRequest
+//Exploring XMLHttpRequest
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMLHttpRequest Lab</title>
+</head>
+<body>
+    <h2>Exploring XMLHttpRequest</h2>
+    <button id="loadData">Load Post Data</button>
+    <div id="output" style="margin-top: 20px; border: 1px solid #ddd; padding: 10px;"></div>
+
+    <script>
+        document.getElementById("loadData").addEventListener("click", function() {
+            const xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    const output = document.getElementById("output");
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        output.innerHTML =
+                            "<strong>Post Title:</strong> " + data.title + "<br><br>" +
+                            "<strong>Content:</strong> " + data.body;
+                    } else {
+                        output.innerHTML = "<span style='color:red;'>Error: Request failed with status " + xhr.status + "</span>";
+                    }
+                }
+            };
+
+            xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1", true);
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
